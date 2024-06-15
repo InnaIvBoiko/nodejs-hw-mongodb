@@ -31,4 +31,4 @@ const PatchContact = new Schema(
   },
 );
 
-export const PatchContactsCollection = model('contacts', PatchContact);
+export const PatchContactsCollection = model('contact', PatchContact);

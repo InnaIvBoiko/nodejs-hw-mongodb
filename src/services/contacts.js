@@ -21,7 +21,7 @@ export const patchContact = async (contactId, payload, options = {}) => {
     { _id: contactId },
     payload,
     {
-      new: true,
+      // new: true,
       includeResultMetadata: true,
       ...options,
     },
@@ -31,7 +31,7 @@ export const patchContact = async (contactId, payload, options = {}) => {
 
   return {
     contact: rawResult.value,
-    isNew: Boolean(rawResult?.lastErrorObject?.upserted),
+    // isNew: Boolean(rawResult?.lastErrorObject?.upserted),
   };
 };  
 
