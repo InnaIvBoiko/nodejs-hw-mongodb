@@ -8,18 +8,21 @@ import {
 } from '../controllers/contacts.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { validateBody } from '../middlewares/validateBody.js';
-import { createContactSchema, updateContactSchema } from '../validation/students.js';
+import { createContactSchema, updateContactSchema } from '../validation/contacts.js';
+import { authenticate } from '../middlewares/authenticate.js';
 
 const router = Router();
 
-router.get('/contacts', ctrlWrapper(getContactsController));
+router.use('/', authenticate);
 
-router.get('/contacts/:contactId', ctrlWrapper(getContactByIdController));
+router.get('/', ctrlWrapper(getContactsController));
 
-router.post('/contacts', validateBody(createContactSchema), ctrlWrapper(createContactController));
+router.get('/:contactId', ctrlWrapper(getContactByIdController));
 
-router.patch('/contacts/:contactId', validateBody(updateContactSchema), ctrlWrapper(patchContactController));
+router.post('', validateBody(createContactSchema), ctrlWrapper(createContactController));
 
-router.delete('/contacts/:contactId', ctrlWrapper(deleteContactController));
+router.patch('/:contactId', validateBody(updateContactSchema), ctrlWrapper(patchContactController));
+
+router.delete('/:contactId', ctrlWrapper(deleteContactController));
 
 export default router;

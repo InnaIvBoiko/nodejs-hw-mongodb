@@ -1,4 +1,4 @@
-import { createContactSchema } from '../validation/students.js';
+import { createContactSchema } from '../validation/contacts.js';
 
 const HttpError = createContactSchema.validate();
 if (HttpError.error) {
