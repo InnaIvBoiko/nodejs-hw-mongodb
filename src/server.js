@@ -17,6 +17,7 @@ export const startServer = () => {
       type: ['application/json', 'application/vnd.api+json'],
     }));
     app.use(cors());
+    app.use(cookieParser());
 
     app.use(
         pino({
@@ -26,7 +27,7 @@ export const startServer = () => {
         }),
     );
 
-    app.use(cookieParser());
+    
     app.use(router);
     app.use('*', notFoundHandler);
     app.use(errorHandler);

@@ -1,4 +1,5 @@
 import createHttpError from 'http-errors';
+import mongoose from 'mongoose';
 
 import {
     getAllContacts,
@@ -15,13 +16,14 @@ export const getContactsController = async (req, res) => {
     const { page, perPage } = parsePaginationParams(req.query);
     const { sortBy, sortOrder } = parseSortParams(req.query);
     const filter = parseFilterParams(req.query);
-
+   
     const contacts = await getAllContacts({
         page,
         perPage,
         sortBy,
         sortOrder,
         filter,
+        userId: req.user._id,
     });
 
     res.status(200).json({
@@ -32,23 +34,24 @@ export const getContactsController = async (req, res) => {
 };
 
 export const getContactByIdController = async (req, res, next) => {
-    const { contactId } = req.params;
-    const contact = await getContactById(contactId);
-
-    if (!contact) {
-        next(createHttpError(404,'Contact not found'));
+    const contactId = req.params.contactId;
+    if (!mongoose.Types.ObjectId.isValid(contactId)) {
+        next(createHttpError(404, 'Contact not found'));
         return;
     };
-          
+    const contact = await getContactById(req.user._id, contactId);
+    if (!contact) {
+        next(createHttpError(404, 'Contact not found'));
+        return;
+    };
     res.status(200).json({
-        status: 200,
-        message: `Successfully found contact with id ${contactId}!`,
+        message: `Successfully found contact with id ${contactId}`,
         data: contact,
-    });
+        });
 };
 
 export const createContactController = async (req, res) => {
-    const contact = await createContact(req.body);
+    const contact = await createContact({ ...req.body, userId: req.user._id });
 
     res.status(201).json({
         status: 201,
@@ -58,9 +61,13 @@ export const createContactController = async (req, res) => {
 };
 
 export const patchContactController = async (req, res, next) => {
-   const { contactId } = req.params;
-    
-    const result = await patchContact(contactId, req.body);
+    const contactId = req.params.contactId;
+
+    if (!mongoose.Types.ObjectId.isValid(contactId)) {
+        next(createHttpError(404, 'Contact not found'));
+        return;
+    };
+    const result = await patchContact(req.user._id, contactId, req.body);
 
     if (!result) {
         next(createHttpError(404, 'Contact not found'));
@@ -75,14 +82,17 @@ export const patchContactController = async (req, res, next) => {
 };
 
 export const deleteContactController = async (req, res, next) => {
-    const { contactId } = req.params;
-    
-    const contact = await deleteContact(contactId);
-
-    if (!contact) {
+    const contactId = req.params.contactId;
+    if (!mongoose.Types.ObjectId.isValid(contactId)) {
         next(createHttpError(404, 'Contact not found'));
         return;
     };
+    const contact = await deleteContact(req.user._id, contactId);
+    
+    if (!contact) {
+        next(createHttpError(404, 'Contact not found'));
+        return;
+  }
 
     res.status(204).send();
 };
