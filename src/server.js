@@ -13,18 +13,13 @@ const PORT = Number(env('PORT', '3000'));
 export const startServer = () => {
     const app = express();
 
-    app.use(express.json({
-        // type: ['application/json', 'application/vnd.api+json', 'multipart/form-data'],
-        type: ['application/json', 'application/vnd.api+json', 'application/form-data']
-    }));
-
-//   app.use((req, res, next) => {
-//     if (req.is('application/json')) {
-//       express.json()(req, res, next);
-//     } else {
-//       next();
-//     }
-//   });
+    app.use((req, res, next) => {
+        if (req.is('application/json')) {
+        express.json()(req, res, next);
+        } else {
+        next();
+        }
+    });
 
     app.use(cors());
     app.use(cookieParser());
