@@ -31,7 +31,6 @@ export const startServer = () => {
             },
         }),
     );
-
     
     app.use(router);
     app.use('*', notFoundHandler);

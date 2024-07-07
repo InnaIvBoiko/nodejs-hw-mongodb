@@ -27,14 +27,16 @@ export const registerUser = async (payload) => {
 
 export const loginUser = async (payload) => {
   const user = await UsersCollection.findOne({ email: payload.email });
+  
   if (!user) {
     throw createHttpError(404, 'User not found');
-  }
+  };
+
   const isEqual = await bcrypt.compare(payload.password, user.password);
 
   if (!isEqual) {
     throw createHttpError(401, 'Unauthorized');
-  }
+  };
 
   await SessionsCollection.deleteOne({ userId: user._id });
 
@@ -62,14 +64,14 @@ export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
 
   if (!session) {
     throw createHttpError(401, 'Session not found');
-  }
+  };
 
   const isSessionTokenExpired =
     new Date() > new Date(session.refreshTokenValidUntil);
 
   if (isSessionTokenExpired) {
     throw createHttpError(401, 'Access token expired');
-  }
+  };
   
   const newSession = createSession();
 
@@ -110,7 +112,7 @@ export const sendResetToken = async (email) => {
   const template = handlebars.compile(templateSource);
   const html = template({
     name: user.name,
-    link: `${env('APP_DOMAIN')}/reset-password?token=${resetToken}`,
+    link: `${env('APP_DOMAIN')}/reset-pwd?token=${resetToken}`,
   });
 
 try {
@@ -129,7 +131,7 @@ try {
         cause: err,
       },
     );
-  };
+    };
 };
 
 export const resetPassword = async (payload) => {
@@ -140,7 +142,7 @@ export const resetPassword = async (payload) => {
   } catch (err) {
     if (err instanceof Error) throw createHttpError(401, 'Token is expired or invalid.');
     throw err;
-  }
+  };
 
   const user = await UsersCollection.findOne({
     email: entries.email,
@@ -149,7 +151,7 @@ export const resetPassword = async (payload) => {
 
   if (!user) {
     throw createHttpError(404, 'User not found');
-  }
+  };
 
   const encryptedPassword = await bcrypt.hash(payload.password, 10);
 
