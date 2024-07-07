@@ -1,6 +1,28 @@
 type: object
 required:
   - name
+  - email
+  - password
+properties:
+  _id:
+    description: User's id
+    type: string
+    example: 6676ebc8d7c1721bb6534fc0
+  name:
+    description: User's name
+    type: string
+    example: Inna Boiko
+  email:
+    description: User's email
+    type: string
+    example: inna_boiko@libero.it
+  password:
+    description: User's password
+    type: string
+    example: password
+type: object
+required:
+  - name
   - phoneNumber
   - userId
 properties:
@@ -21,7 +43,7 @@ properties:
     type: string
     example: mark@verga.com
   isFavourite:
-    description: Is Contact favourite? Can be true or false
+    description: True if contact is favourite
     type: boolean
     example: true
   contactType:

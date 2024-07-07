@@ -20,5 +20,6 @@ content:
             - message
           properties:
             message:
+              description: Error message
               type: string
-              example: 'Access token expired'
+              example: Access token expired

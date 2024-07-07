@@ -1,7 +1,6 @@
 type: object
 required:
-  - name
-  - phoneNumber
+  - _id
   - userId
 properties:
   _id:
@@ -21,7 +20,7 @@ properties:
     type: string
     example: mark@verga.com
   isFavourite:
-    description: Is Contact favourite? Can be true or false
+    description: True if contact is favourite
     type: boolean
     example: true
   contactType:
