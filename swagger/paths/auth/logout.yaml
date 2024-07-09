@@ -1,0 +1,36 @@
+tags:
+  - Auth
+summary: Logout user
+operationId: logoutUser
+description: Logout user
+security:
+  - bearerAuth: []
+responses:
+  '204':
+    description: User was logout
+  '404':
+    description: User not found
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: NotFoundError
+            data:
+              type: object
+              required:
+                - message
+              properties:
+                message:
+                  description: Error message
+                  type: string
+                  example: User not found

@@ -56,7 +56,7 @@ requestBody:
             format: binary
 responses:
   '200':
-    description: Creates a contact
+    description: Updated a contact
     content:
       application/json:
         schema:
@@ -74,8 +74,32 @@ responses:
               example: Successfully patched a contact!
             data:
               type: object
-              $ref: ../../components/schemas/patchContact.yaml
+              $ref: ../../../components/schemas/patchContact.yaml
   '401':
     $ref: ../../../components/responses/401.yaml
   '404':
-    $ref: ../../../components/responses/404.yaml
+    description: Contact not found
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: NotFoundError
+            data:
+              type: object
+              required:
+                - message
+              properties:
+                message:
+                  description: Error message
+                  type: string
+                  example: Contact not found
