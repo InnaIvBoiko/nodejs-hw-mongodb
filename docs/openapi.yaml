@@ -10,10 +10,10 @@ tags:
   - name: Contacts
     description: Operations about contacts
   - name: Auth
-    description: Operations about auth
+    description: Auth operations
 servers:
   - url: <localhost:3000>
-  - url: <https://contacts-app-swagger.onrender.com>
+  - url: <https://contacts-app-swagger.onrender.com/api-docs/>
 paths:
   /contacts:
     get:

@@ -22,10 +22,6 @@ requestBody:
           - phoneNumber
           - userId
         properties:
-          _id:
-            description: Contact's id
-            type: string
-            example: 6687c71ada03d4549cb2930a
           name:
             description: Contacts's name
             type: string
@@ -46,10 +42,6 @@ requestBody:
             description: Contact's type
             type: string
             enum: ['work', 'home', 'personal']
-          userId:
-            description: Contacts's user id
-            type: string
-            example: 6676ebc8d7c1721bb6534fc0
           photo:
             description: Link to contacts's photo
             type: string

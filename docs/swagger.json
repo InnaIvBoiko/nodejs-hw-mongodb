@@ -14,7 +14,7 @@
       "url": "<localhost:3000>"
     },
     {
-      "url": "<https://contacts-app-swagger.onrender.com>"
+      "url": "<https://contacts-app-swagger.onrender.com/api-docs/>"
     }
   ],
   "tags": [
@@ -24,7 +24,7 @@
     },
     {
       "name": "Auth",
-      "description": "Operations about auth"
+      "description": "Auth operations"
     }
   ],
   "paths": {
@@ -202,15 +202,9 @@
                 "type": "object",
                 "required": [
                   "name",
-                  "phoneNumber",
-                  "userId"
+                  "phoneNumber"
                 ],
                 "properties": {
-                  "_id": {
-                    "description": "Contact's id",
-                    "type": "string",
-                    "example": "6687c71ada03d4549cb2930a"
-                  },
                   "name": {
                     "description": "Contacts's name",
                     "type": "string",
@@ -239,11 +233,6 @@
                       "home",
                       "personal"
                     ]
-                  },
-                  "userId": {
-                    "description": "Contacts's user id",
-                    "type": "string",
-                    "example": "6676ebc8d7c1721bb6534fc0"
                   },
                   "photo": {
                     "description": "Link to contacts's photo",
@@ -422,11 +411,6 @@
                   "userId"
                 ],
                 "properties": {
-                  "_id": {
-                    "description": "Contact's id",
-                    "type": "string",
-                    "example": "6687c71ada03d4549cb2930a"
-                  },
                   "name": {
                     "description": "Contacts's name",
                     "type": "string",
@@ -455,11 +439,6 @@
                       "home",
                       "personal"
                     ]
-                  },
-                  "userId": {
-                    "description": "Contacts's user id",
-                    "type": "string",
-                    "example": "6676ebc8d7c1721bb6534fc0"
                   },
                   "photo": {
                     "description": "Link to contacts's photo",
@@ -971,6 +950,7 @@
       "contact": {
         "type": "object",
         "required": [
+          "_id",
           "name",
           "phoneNumber",
           "userId"
